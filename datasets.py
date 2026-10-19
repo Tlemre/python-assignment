@@ -17,3 +17,18 @@ class Dataset:
         except FileNotFoundError:
             raise DataLoadError(f"File not found: {self.file_path}")
         return self.data
+
+
+class TrainingData(Dataset):
+      """Training data with four training functions."""
+      pass
+
+
+class IdealFunctions(Dataset):
+      """Data of the 50 ideal functions."""
+      pass
+
+
+class TestData(Dataset):
+      """Test data that will be mapped to the ideal functions."""
+      pass
