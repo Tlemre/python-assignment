@@ -19,7 +19,7 @@ class Visualizer:
 
     def _function_plot(self, training_data, ideal_functions, train_col, ideal_col, mapping, color):
         """Create one plot for a training function, its ideal function and its mapped test points."""
-        plot = figure(width=550, height=400, title=f"{train_col} -> ideal function {ideal_col}",
+        plot = figure(width=700, height=400, title=f"{train_col} -> ideal function {ideal_col}",
                       x_axis_label="x", y_axis_label="y")
         plot.scatter(training_data["x"], training_data[train_col], size=3, color="lightgray",
                      legend_label="Training data")
@@ -37,12 +37,12 @@ class Visualizer:
                                 legend_label="Mapped test points")
         plot.add_tools(HoverTool(renderers=[renderer],
                                  tooltips=[("x", "@x"), ("y", "@y"), ("Deviation", "@deviation")]))
-        plot.legend.location = "top_left"
+        plot.add_layout(plot.legend[0], "right")
         return plot
 
     def _overview_plot(self, test_data, mapping, colors):
         """Create an overview plot of all test points, coloured by their assigned function."""
-        plot = figure(width=550, height=400, title="All test points", x_axis_label="x", y_axis_label="y")
+        plot = figure(width=700, height=400, title="All test points", x_axis_label="x", y_axis_label="y")
         merged = test_data.merge(mapping, left_on=["x", "y"], right_on=["X (test func)", "Y (test func)"],
                                  how="left")
         unassigned = merged[merged["No. of ideal func"].isna()]
@@ -50,7 +50,7 @@ class Visualizer:
         for ideal_col, color in colors.items():
             assigned = merged[merged["No. of ideal func"] == ideal_col]
             plot.scatter(assigned["x"], assigned["y"], size=6, color=color, legend_label=ideal_col)
-        plot.legend.location = "top_left"
+        plot.add_layout(plot.legend[0], "right")
         return plot
 
     def plot(self, training_data, ideal_functions, test_data, selection, mapping):
